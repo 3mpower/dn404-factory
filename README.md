@@ -1,66 +1,43 @@
-## Foundry
+# DN404 Factory 🥜
 
-**Foundry is a blazing fast, portable and modular toolkit for Ethereum application development written in Rust.**
+[![CI][ci-shield]][ci-url]
 
-Foundry consists of:
+DN404 Factory is a set of contracts built for the DN404 implementation that enables anyone to deploy their own DN404 contracts.
 
--   **Forge**: Ethereum testing framework (like Truffle, Hardhat and DappTools).
--   **Cast**: Swiss army knife for interacting with EVM smart contracts, sending transactions and getting chain data.
--   **Anvil**: Local Ethereum node, akin to Ganache, Hardhat Network.
--   **Chisel**: Fast, utilitarian, and verbose solidity REPL.
+## Contracts
 
-## Documentation
+The Solidity smart contracts are located in the `src` directory.
 
-https://book.getfoundry.sh/
-
-## Usage
-
-### Build
-
-```shell
-$ forge build
+```ml
+src
+├─ DN404Factory — "Factory contract for DN404"
+├─ DN404Cloneable — "Cloneable contract for DN404"
 ```
 
-### Test
+## Contributing
 
-```shell
-$ forge test
-```
+Feel free to make a pull request.
 
-### Format
+## Safety
 
-```shell
-$ forge fmt
-```
+This is **experimental software** and is provided on an "as is" and "as available" basis.
 
-### Gas Snapshots
+We **do not give any warranties** and **will not be liable for any loss** incurred through any use of this codebase.
 
-```shell
-$ forge snapshot
-```
+While DN404Factory and DN404Cloneable has been heavily tested, there may be parts that exhibit unexpected emergent behavior when used with other code, or break in future Solidity versions.
 
-### Anvil
+Please always include your own thorough tests when using DN404Factory and DN404Cloneable to make sure it works correctly with your code.
 
-```shell
-$ anvil
-```
+Please call any required internal initialization methods accordingly.
 
-### Deploy
+## Acknowledgements
 
-```shell
-$ forge script script/Counter.s.sol:CounterScript --rpc-url <your_rpc_url> --private-key <your_private_key>
-```
+This repository is inspired by various sources:
 
-### Cast
+- [DN404](https://github.com/vectorized/dn404)
+- [Solady](https://github.com/vectorized/solady)
 
-```shell
-$ cast <subcommand>
-```
-
-### Help
-
-```shell
-$ forge --help
-$ anvil --help
-$ cast --help
-```
+[npm-shield]: https://img.shields.io/npm/v/dn404.svg
+[npm-url]: https://www.npmjs.com/package/dn404
+[ci-shield]: https://img.shields.io/github/actions/workflow/status/vectorized/dn404/ci.yml?branch=main&label=build
+[ci-url]: https://github.com/vectorized/dn404/actions/workflows/ci.yml
