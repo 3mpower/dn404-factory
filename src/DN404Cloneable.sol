@@ -3,13 +3,13 @@ pragma solidity ^0.8.4;
 
 import "dn404/DN404.sol";
 import "dn404/DN404Mirror.sol";
-import {Ownable} from "solady/src/auth/Ownable.sol";
-import {LibString} from "solady/src/utils/LibString.sol";
-import {SafeTransferLib} from "solady/src/utils/SafeTransferLib.sol";
-import {Clone} from "solady/src/utils/Clone.sol";
-import {IERC20} from "forge-std/src/interfaces/IERC20.sol";
+import {Ownable} from "solady/auth/Ownable.sol";
+import {LibString} from "solady/utils/LibString.sol";
+import {SafeTransferLib} from "solady/utils/SafeTransferLib.sol";
+import {Clone} from "solady/utils/Clone.sol";
+import {IERC20} from "forge-std/interfaces/IERC20.sol";
 
-contract DN404Cloneable is DN404, Ownable, Clone {
+abstract contract DN404Cloneable is DN404, Ownable, Clone {
     error LiquidityLocked();
     error UnableToGetPair();
     error UnableToWithdraw();
@@ -121,9 +121,7 @@ contract DN404Cloneable is DN404, Ownable, Clone {
         _baseURI = baseURI_;
     }
 
-    function tokenURI(
-        uint256 tokenId
-    ) public view override returns (string memory) {
+    function tokenURI(uint256 tokenId) public view returns (string memory) {
         return
             bytes(_baseURI).length != 0
                 ? string(
