@@ -13,9 +13,13 @@ contract DNFactoryTest is SoladyTest {
 
     address[] addresses;
     uint256[] amounts;
+    //Access variables from .env file via vm.envString("varname")
+    string MAINNET_RPC_URL = vm.envString("MAINNET_RPC_URL");
+    //string OPTIMISM_RPC_URL = vm.envString("OPTIMISM_RPC_URL");
+
 
     function setUp() public {
-        vm.createSelectFork(vm.rpcUrl("mainnet"), 19227633);
+        vm.createSelectFork(MAINNET_RPC_URL, 19227633);
         vm.prank(alice);
         factory = new DNFactory();
     }
