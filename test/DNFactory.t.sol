@@ -2,8 +2,8 @@
 pragma solidity ^0.8.4;
 
 import "./utils/SoladyTest.sol";
-import {DNFactory} from "../src/DN404Factory.sol";
-import {DN404Cloneable} from "../src/DN404Cloneable.sol";
+import {DNFactory} from "src/DN404Factory.sol";
+import {DN404Cloneable} from "src/DN404Cloneable.sol";
 import {DN404Mirror} from "dn404/DN404Mirror.sol";
 
 contract DNFactoryTest is SoladyTest {

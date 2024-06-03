@@ -5,9 +5,9 @@ import {DN404} from"dn404/DN404.sol";
 import {DN404Mirror} from"dn404/DN404Mirror.sol";
 import {Ownable} from "solady/auth/Ownable.sol";
 import {LibString} from "solady/utils/LibString.sol";
-import {SafeTransferLib} from "../../lib/solady/src/utils/SafeTransferLib.sol";
-import {Clone} from "../../lib/solady/src/utils/Clone.sol";
-import {IERC20} from "../../lib/forge-std/src/interfaces/IERC20.sol";
+import {SafeTransferLib} from "solady/utils/SafeTransferLib.sol";
+import {Clone} from "solady/utils/Clone.sol";
+import {IERC20} from "forge-std/interfaces/IERC20.sol";
 
 contract DN404Cloneable is DN404, Ownable, Clone {
     error LiquidityLocked();
