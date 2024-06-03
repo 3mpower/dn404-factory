@@ -3,8 +3,8 @@ pragma solidity ^0.8.4;
 
 import {DN404} from"dn404/DN404.sol";
 import {DN404Mirror} from"dn404/DN404Mirror.sol";
-import {Ownable} from "../../lib/solady/src/auth/Ownable.sol";
-import {LibString} from "../../lib/solady/src/utils/LibString.sol";
+import {Ownable} from "solady/auth/Ownable.sol";
+import {LibString} from "solady/utils/LibString.sol";
 import {SafeTransferLib} from "../../lib/solady/src/utils/SafeTransferLib.sol";
 import {Clone} from "../../lib/solady/src/utils/Clone.sol";
 import {IERC20} from "../../lib/forge-std/src/interfaces/IERC20.sol";
