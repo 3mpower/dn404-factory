@@ -6,11 +6,6 @@ import {DN404Cloneable} from "./DN404Cloneable.sol";
 
 contract DNFactory {
     error FailedToInitialize();
-    error ArrayLengthMismatch();
-    error InvalidLiquidityConfig();
-    error InvalidAllocations();
-    error EtherProvidedForZeroLiquidity();
-    error InvalidAirdropConfig();
 
     address public immutable implementation;
 
@@ -26,41 +21,25 @@ contract DNFactory {
     }
 
     function deployDN(
-        string calldata name,
-        string calldata sym,
-        Allocations calldata allocations,
-        uint96 totalSupply,
-        uint256 liquidityLockPeriodInSeconds,
-        address[] calldata addresses,
-        uint256[] calldata amounts
+        string memory name_,
+        string memory symbol_,
+        string memory baseURI_,
+        uint256 maxSupply_,
+        uint256 mintPrice_,
+        uint96 initialTokenSupply_,
+        address initialSupplyOwner_
     ) external payable returns (address tokenAddress) {
-        if (allocations.liquidityAllocation + allocations.teamAllocation + allocations.airdropAllocation != totalSupply)
-        {
-            revert InvalidAllocations();
-        }
-        if (addresses.length != amounts.length) revert ArrayLengthMismatch();
-        if (
-            (addresses.length == 0 && allocations.airdropAllocation > 0)
-                || (addresses.length != 0 && allocations.airdropAllocation == 0)
-        ) revert InvalidAirdropConfig();
-        if (
-            (allocations.liquidityAllocation != 0 && msg.value == 0)
-                || (allocations.liquidityAllocation == 0 && msg.value > 0)
-        ) {
-            revert InvalidLiquidityConfig();
-        }
-
-        tokenAddress = LibClone.cloneDeterministic(implementation, keccak256(abi.encodePacked(name)));
+        tokenAddress = LibClone.cloneDeterministic(implementation, keccak256(abi.encodePacked(name_)));
         (bool success,) = tokenAddress.call{value: msg.value}(
             abi.encodeWithSelector(
                 DN404Cloneable.initialize.selector,
-                name,
-                sym,
-                allocations,
-                totalSupply,
-                liquidityLockPeriodInSeconds,
-                addresses,
-                amounts
+                name_,
+                symbol_,
+                baseURI_,
+                maxSupply_,
+                mintPrice_,
+                initialTokenSupply_,
+                initialSupplyOwner_
             )
         );
 
