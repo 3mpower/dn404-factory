@@ -17,7 +17,6 @@ contract DNFactoryTest is SoladyTest {
     string MAINNET_RPC_URL = vm.envString("MAINNET_RPC_URL");
     //string OPTIMISM_RPC_URL = vm.envString("OPTIMISM_RPC_URL");
 
-
     function setUp() public {
         vm.createSelectFork(MAINNET_RPC_URL, 19227633);
         vm.prank(alice);
@@ -30,15 +29,13 @@ contract DNFactoryTest is SoladyTest {
             amounts.push(uint256(keccak256(abi.encode(block.timestamp, i))) % type(uint64).max);
         }
 
-        DNFactory.Allocations memory allocations =
-            DNFactory.Allocations(100e18, 100e18, _sum(amounts));
+        DNFactory.Allocations memory allocations = DNFactory.Allocations(100e18, 100e18, _sum(amounts));
 
         address dnAddress = factory.deployDN{value: 200 ether}(
             "DN404",
             "DN",
             allocations,
-            allocations.airdropAllocation + allocations.liquidityAllocation
-                + allocations.teamAllocation,
+            allocations.airdropAllocation + allocations.liquidityAllocation + allocations.teamAllocation,
             60,
             addresses,
             amounts
@@ -58,15 +55,13 @@ contract DNFactoryTest is SoladyTest {
             amounts.push(uint256(keccak256(abi.encode(block.timestamp, i))) % type(uint64).max);
         }
 
-        DNFactory.Allocations memory allocations =
-            DNFactory.Allocations(100e18, 100e18, _sum(amounts));
+        DNFactory.Allocations memory allocations = DNFactory.Allocations(100e18, 100e18, _sum(amounts));
 
         address dnAddress = factory.deployDN{value: 200 ether}(
             "DN404",
             "DN",
             allocations,
-            allocations.airdropAllocation + allocations.liquidityAllocation
-                + allocations.teamAllocation,
+            allocations.airdropAllocation + allocations.liquidityAllocation + allocations.teamAllocation,
             60,
             addresses,
             amounts
@@ -87,15 +82,13 @@ contract DNFactoryTest is SoladyTest {
             amounts.push(uint256(keccak256(abi.encode(block.timestamp, i))) % type(uint64).max);
         }
 
-        DNFactory.Allocations memory allocations =
-            DNFactory.Allocations(100e18, 100e18, _sum(amounts));
+        DNFactory.Allocations memory allocations = DNFactory.Allocations(100e18, 100e18, _sum(amounts));
 
         address dnAddress = factory.deployDN{value: 200 ether}(
             "DN404",
             "DN",
             allocations,
-            allocations.airdropAllocation + allocations.liquidityAllocation
-                + allocations.teamAllocation,
+            allocations.airdropAllocation + allocations.liquidityAllocation + allocations.teamAllocation,
             60,
             addresses,
             amounts
@@ -117,8 +110,7 @@ contract DNFactoryTest is SoladyTest {
             amounts.push(uint256(keccak256(abi.encode(block.timestamp, i))) % type(uint64).max);
         }
 
-        DNFactory.Allocations memory allocations =
-            DNFactory.Allocations(100e18, 100e18, _sum(amounts));
+        DNFactory.Allocations memory allocations = DNFactory.Allocations(100e18, 100e18, _sum(amounts));
 
         // allocations too high
         vm.expectRevert(DNFactory.InvalidAllocations.selector);
@@ -126,8 +118,7 @@ contract DNFactoryTest is SoladyTest {
             "DN404",
             "DN",
             allocations,
-            allocations.airdropAllocation + allocations.liquidityAllocation
-                + allocations.teamAllocation + 1,
+            allocations.airdropAllocation + allocations.liquidityAllocation + allocations.teamAllocation + 1,
             60,
             addresses,
             amounts
@@ -139,8 +130,7 @@ contract DNFactoryTest is SoladyTest {
             "DN404",
             "DN",
             allocations,
-            allocations.airdropAllocation + allocations.liquidityAllocation
-                + allocations.teamAllocation - 1,
+            allocations.airdropAllocation + allocations.liquidityAllocation + allocations.teamAllocation - 1,
             60,
             addresses,
             amounts
@@ -155,16 +145,14 @@ contract DNFactoryTest is SoladyTest {
 
         addresses.push(address(42069));
 
-        DNFactory.Allocations memory allocations =
-            DNFactory.Allocations(100e18, 100e18, _sum(amounts));
+        DNFactory.Allocations memory allocations = DNFactory.Allocations(100e18, 100e18, _sum(amounts));
 
         vm.expectRevert(DNFactory.ArrayLengthMismatch.selector);
         factory.deployDN{value: 200 ether}(
             "DN404",
             "DN",
             allocations,
-            allocations.airdropAllocation + allocations.liquidityAllocation
-                + allocations.teamAllocation,
+            allocations.airdropAllocation + allocations.liquidityAllocation + allocations.teamAllocation,
             60,
             addresses,
             amounts
@@ -180,8 +168,7 @@ contract DNFactoryTest is SoladyTest {
             "DN404",
             "DN",
             allocations,
-            allocations.airdropAllocation + allocations.liquidityAllocation
-                + allocations.teamAllocation,
+            allocations.airdropAllocation + allocations.liquidityAllocation + allocations.teamAllocation,
             60,
             addresses,
             amounts
@@ -200,8 +187,7 @@ contract DNFactoryTest is SoladyTest {
             "DN404",
             "DN",
             allocations,
-            allocations.airdropAllocation + allocations.liquidityAllocation
-                + allocations.teamAllocation,
+            allocations.airdropAllocation + allocations.liquidityAllocation + allocations.teamAllocation,
             60,
             addresses,
             amounts
@@ -214,8 +200,7 @@ contract DNFactoryTest is SoladyTest {
             amounts.push(uint256(keccak256(abi.encode(block.timestamp, i))) % type(uint64).max);
         }
 
-        DNFactory.Allocations memory allocations =
-            DNFactory.Allocations(100e18, 100e18, _sum(amounts));
+        DNFactory.Allocations memory allocations = DNFactory.Allocations(100e18, 100e18, _sum(amounts));
 
         // 0 value tx should revert because of liquidity allocation
         vm.expectRevert(DNFactory.InvalidLiquidityConfig.selector);
@@ -223,8 +208,7 @@ contract DNFactoryTest is SoladyTest {
             "DN404",
             "DN",
             allocations,
-            allocations.airdropAllocation + allocations.liquidityAllocation
-                + allocations.teamAllocation,
+            allocations.airdropAllocation + allocations.liquidityAllocation + allocations.teamAllocation,
             60,
             addresses,
             amounts
@@ -238,8 +222,7 @@ contract DNFactoryTest is SoladyTest {
             "DN404",
             "DN",
             allocations,
-            allocations.airdropAllocation + allocations.liquidityAllocation
-                + allocations.teamAllocation,
+            allocations.airdropAllocation + allocations.liquidityAllocation + allocations.teamAllocation,
             60,
             addresses,
             amounts
