@@ -9,12 +9,6 @@ contract DNFactory {
 
     address public immutable implementation;
 
-    struct Allocations {
-        uint80 liquidityAllocation;
-        uint80 teamAllocation;
-        uint80 airdropAllocation;
-    }
-
     constructor() {
         DN404Cloneable dn = new DN404Cloneable();
         implementation = address(dn);
@@ -26,11 +20,13 @@ contract DNFactory {
         string memory baseURI_,
         uint256 maxSupply_,
         uint256 mintPrice_,
-        uint96 initialTokenSupply_,
-        address initialSupplyOwner_
+        uint96 teamAllocation_
     ) external payable returns (address tokenAddress) {
-        tokenAddress = LibClone.cloneDeterministic(implementation, keccak256(abi.encodePacked(name_)));
-        (bool success,) = tokenAddress.call{value: msg.value}(
+        tokenAddress = LibClone.cloneDeterministic(
+            implementation,
+            keccak256(abi.encodePacked(name_))
+        );
+        (bool success, ) = tokenAddress.call{value: msg.value}(
             abi.encodeWithSelector(
                 DN404Cloneable.initialize.selector,
                 name_,
@@ -38,8 +34,7 @@ contract DNFactory {
                 baseURI_,
                 maxSupply_,
                 mintPrice_,
-                initialTokenSupply_,
-                initialSupplyOwner_
+                teamAllocation_
             )
         );
 
