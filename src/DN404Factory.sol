@@ -21,12 +21,12 @@ contract DNFactory {
         uint256 maxSupply_,
         uint256 mintPrice_,
         uint96 teamAllocation_
-    ) external payable returns (address tokenAddress) {
+    ) external returns (address tokenAddress) {
         tokenAddress = LibClone.cloneDeterministic(
             implementation,
             keccak256(abi.encodePacked(name_))
         );
-        (bool success, ) = tokenAddress.call{value: msg.value}(
+        (bool success, ) = tokenAddress.call(
             abi.encodeWithSelector(
                 DN404Cloneable.initialize.selector,
                 name_,

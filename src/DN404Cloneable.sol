@@ -26,7 +26,7 @@ contract DN404Cloneable is DN404, Ownable, Clone {
         uint256 maxSupply_,
         uint256 mintPrice_,
         uint96 teamAllocation_
-    ) external payable {
+    ) external {
         if (initialized) revert();
         initialized = true;
 
