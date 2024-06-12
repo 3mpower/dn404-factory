@@ -25,8 +25,7 @@ contract DN404Cloneable is DN404, Ownable, Clone {
         string memory baseURI_,
         uint256 maxSupply_,
         uint256 mintPrice_,
-        uint96 initialTokenSupply,
-        address initialSupplyOwner
+        uint96 teamAllocation
     ) external payable {
         if (initialized) revert();
         initialized = true;
@@ -40,7 +39,7 @@ contract DN404Cloneable is DN404, Ownable, Clone {
         _baseURI = baseURI_;
 
         address mirror = address(new DN404Mirror(msg.sender));
-        _initializeDN404(initialTokenSupply, initialSupplyOwner, mirror);
+        _initializeDN404(teamAllocation, tx.origin, mirror);
     }
 
     function name() public view override returns (string memory) {
@@ -51,13 +50,9 @@ contract DN404Cloneable is DN404, Ownable, Clone {
         return _symbol;
     }
 
-    function _tokenURI(
-        uint256 tokenId
-    ) internal view override returns (string memory result) {
+    function _tokenURI(uint256 tokenId) internal view override returns (string memory result) {
         if (bytes(_baseURI).length != 0) {
-            result = string(
-                abi.encodePacked(_baseURI, LibString.toString(tokenId))
-            );
+            result = string(abi.encodePacked(_baseURI, LibString.toString(tokenId)));
         }
     }
 
@@ -70,10 +65,23 @@ contract DN404Cloneable is DN404, Ownable, Clone {
     }
 
     function mint(address to, uint256 amount) public payable {
-        uint256 requiredAmount = _mintPrice * amount;
-        if (msg.value < requiredAmount) revert NotEnoughEth();
+        // uint256 requiredAmount = _mintPrice * amount;
+        // if (msg.value < requiredAmount) revert NotEnoughEth();
+
+        // require(_saleStartTime != 0 && block.timestamp >= _saleStartTime, "sale has not started yet");
+
         if (totalSupply() + amount > _maxSupply) revert MaxSupplyExceeded();
         _mint(to, amount);
+        refundIfOver(_mintPrice * amount);
+    }
+
+    function refundIfOver(uint256 price) private {
+        // require(msg.value >= price, "Need to send more ETH.");
+        if (msg.value < price) revert NotEnoughEth();
+
+        if (msg.value > price) {
+            payable(msg.sender).transfer(msg.value - price);
+        }
     }
 
     function maxSupply() public view returns (uint256) {
