@@ -65,8 +65,7 @@ abstract contract Test is DSTest, Script {
         bool inputsEq;
         /// @solidity memory-safe-assembly
         assembly {
-            inputsEq :=
-                eq(keccak256(a, shl(5, add(mload(a), 1))), keccak256(b, shl(5, add(mload(b), 1))))
+            inputsEq := eq(keccak256(a, shl(5, add(mload(a), 1))), keccak256(b, shl(5, add(mload(b), 1))))
         }
         if (!inputsEq) {
             emit log("Error: a == b not satisfied [uint[]]");
@@ -80,8 +79,7 @@ abstract contract Test is DSTest, Script {
         bool inputsEq;
         /// @solidity memory-safe-assembly
         assembly {
-            inputsEq :=
-                eq(keccak256(a, shl(5, add(mload(a), 1))), keccak256(b, shl(5, add(mload(b), 1))))
+            inputsEq := eq(keccak256(a, shl(5, add(mload(a), 1))), keccak256(b, shl(5, add(mload(b), 1))))
         }
         if (!inputsEq) {
             emit log("Error: a == b not satisfied [int[]]");
@@ -95,8 +93,7 @@ abstract contract Test is DSTest, Script {
         bool inputsEq;
         /// @solidity memory-safe-assembly
         assembly {
-            inputsEq :=
-                eq(keccak256(a, shl(5, add(mload(a), 1))), keccak256(b, shl(5, add(mload(b), 1))))
+            inputsEq := eq(keccak256(a, shl(5, add(mload(a), 1))), keccak256(b, shl(5, add(mload(b), 1))))
         }
         if (!inputsEq) {
             emit log("Error: a == b not satisfied [address[]]");
@@ -110,8 +107,7 @@ abstract contract Test is DSTest, Script {
         bool inputsEq;
         /// @solidity memory-safe-assembly
         assembly {
-            inputsEq :=
-                eq(keccak256(a, shl(5, add(mload(a), 1))), keccak256(b, shl(5, add(mload(b), 1))))
+            inputsEq := eq(keccak256(a, shl(5, add(mload(a), 1))), keccak256(b, shl(5, add(mload(b), 1))))
         }
         if (!inputsEq) {
             emit log_named_string("Error", err);
@@ -123,8 +119,7 @@ abstract contract Test is DSTest, Script {
         bool inputsEq;
         /// @solidity memory-safe-assembly
         assembly {
-            inputsEq :=
-                eq(keccak256(a, shl(5, add(mload(a), 1))), keccak256(b, shl(5, add(mload(b), 1))))
+            inputsEq := eq(keccak256(a, shl(5, add(mload(a), 1))), keccak256(b, shl(5, add(mload(b), 1))))
         }
         if (!inputsEq) {
             emit log_named_string("Error", err);
@@ -136,8 +131,7 @@ abstract contract Test is DSTest, Script {
         bool inputsEq;
         /// @solidity memory-safe-assembly
         assembly {
-            inputsEq :=
-                eq(keccak256(a, shl(5, add(mload(a), 1))), keccak256(b, shl(5, add(mload(b), 1))))
+            inputsEq := eq(keccak256(a, shl(5, add(mload(a), 1))), keccak256(b, shl(5, add(mload(b), 1))))
         }
         if (!inputsEq) {
             emit log_named_string("Error", err);

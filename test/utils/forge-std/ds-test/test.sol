@@ -58,8 +58,7 @@ contract DSTest {
             if (hasHEVMContext()) {
                 (, bytes memory retdata) = HEVM_ADDRESS.call(
                     abi.encodePacked(
-                        bytes4(keccak256("load(address,bytes32)")),
-                        abi.encode(HEVM_ADDRESS, bytes32("failed"))
+                        bytes4(keccak256("load(address,bytes32)")), abi.encode(HEVM_ADDRESS, bytes32("failed"))
                     )
                 );
                 globalFailed = abi.decode(retdata, (bool));

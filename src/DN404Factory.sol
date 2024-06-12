@@ -34,31 +34,24 @@ contract DNFactory {
         address[] calldata addresses,
         uint256[] calldata amounts
     ) external payable returns (address tokenAddress) {
-        if (
-            allocations.liquidityAllocation +
-                allocations.teamAllocation +
-                allocations.airdropAllocation !=
-            totalSupply
-        ) {
+        if (allocations.liquidityAllocation + allocations.teamAllocation + allocations.airdropAllocation != totalSupply)
+        {
             revert InvalidAllocations();
         }
         if (addresses.length != amounts.length) revert ArrayLengthMismatch();
         if (
-            (addresses.length == 0 && allocations.airdropAllocation > 0) ||
-            (addresses.length != 0 && allocations.airdropAllocation == 0)
+            (addresses.length == 0 && allocations.airdropAllocation > 0)
+                || (addresses.length != 0 && allocations.airdropAllocation == 0)
         ) revert InvalidAirdropConfig();
         if (
-            (allocations.liquidityAllocation != 0 && msg.value == 0) ||
-            (allocations.liquidityAllocation == 0 && msg.value > 0)
+            (allocations.liquidityAllocation != 0 && msg.value == 0)
+                || (allocations.liquidityAllocation == 0 && msg.value > 0)
         ) {
             revert InvalidLiquidityConfig();
         }
 
-        tokenAddress = LibClone.cloneDeterministic(
-            implementation,
-            keccak256(abi.encodePacked(name))
-        );
-        (bool success, ) = tokenAddress.call{value: msg.value}(
+        tokenAddress = LibClone.cloneDeterministic(implementation, keccak256(abi.encodePacked(name)));
+        (bool success,) = tokenAddress.call{value: msg.value}(
             abi.encodeWithSelector(
                 DN404Cloneable.initialize.selector,
                 name,

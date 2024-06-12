@@ -253,12 +253,7 @@ contract TestPlus {
     /// @dev Adapted from `bound`:
     /// https://github.com/foundry-rs/forge-std/blob/ff4bf7db008d096ea5a657f2c20516182252a3ed/src/StdUtils.sol#L10
     /// Differentially fuzzed tested against the original implementation.
-    function _hem(uint256 x, uint256 min, uint256 max)
-        internal
-        pure
-        virtual
-        returns (uint256 result)
-    {
+    function _hem(uint256 x, uint256 min, uint256 max) internal pure virtual returns (uint256 result) {
         require(min <= max, "Max is less than min.");
 
         /// @solidity memory-safe-assembly
@@ -336,9 +331,7 @@ contract TestPlus {
                 for { let i := 0 } lt(i, n) { i := add(0x20, i) } {
                     mstore(add(add(m, 0x80), i), mload(add(add(ic2fBytecode, 0x20), i)))
                 }
-                if iszero(call(gas(), _VM_ADDRESS, 0, add(m, 0x1c), add(n, 0x64), 0x00, 0x00)) {
-                    revert(0, 0)
-                }
+                if iszero(call(gas(), _VM_ADDRESS, 0, add(m, 0x1c), add(n, 0x64), 0x00, 0x00)) { revert(0, 0) }
             }
         }
         /// @solidity memory-safe-assembly
@@ -362,10 +355,7 @@ contract TestPlus {
     }
 
     /// @dev Deploys a contract via 0age's immutable create 2 factory for testing.
-    function _safeCreate2(bytes32 salt, bytes memory initializationCode)
-        internal
-        returns (address deploymentAddress)
-    {
+    function _safeCreate2(bytes32 salt, bytes memory initializationCode) internal returns (address deploymentAddress) {
         deploymentAddress = _safeCreate2(0, salt, initializationCode);
     }
 
