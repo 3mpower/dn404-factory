@@ -78,9 +78,4 @@ contract DNFactoryTest is SoladyTest {
         dn.withdraw();
     }
 
-    // function _sum(uint256[] storage array) internal view returns (uint80 sum) {
-    //     for (uint256 i = 0; i < array.length; i++) {
-    //         sum += uint80(array[i]);
-    //     }
-    // }
 }
