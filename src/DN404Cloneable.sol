@@ -50,13 +50,9 @@ contract DN404Cloneable is DN404, Ownable, Clone {
         return _symbol;
     }
 
-    function _tokenURI(
-        uint256 tokenId
-    ) internal view override returns (string memory result) {
+    function _tokenURI(uint256 tokenId) internal view override returns (string memory result) {
         if (bytes(_baseURI).length != 0) {
-            result = string(
-                abi.encodePacked(_baseURI, LibString.toString(tokenId))
-            );
+            result = string(abi.encodePacked(_baseURI, LibString.toString(tokenId)));
         }
     }
 
@@ -71,7 +67,7 @@ contract DN404Cloneable is DN404, Ownable, Clone {
     function mint(address to, uint256 amount) public payable {
         if (totalSupply() + amount > _maxSupply) revert MaxSupplyExceeded();
         _mint(to, amount);
-        refundIfOver(_mintPrice * amount);
+        refundIfOver(_mintPrice * (amount / 1e18));
     }
 
     function refundIfOver(uint256 price) private {
