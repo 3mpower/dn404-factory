@@ -3,12 +3,6 @@
 # See more config options at: https://github.com/gakonst/foundry/tree/master/config
 
 [profile.default]
-solc_version = "0.8.26"
-evm_version = "paris" # Cancun will be tested in the CI.
-auto_detect_solc = false
-optimizer = true
-optimizer_runs = 1_000
-gas_limit = 1_000_000_000 # ETH is 30M, but we use a higher value.
 
 src = "src"
 out = "out"
