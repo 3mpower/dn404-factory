@@ -22,19 +22,10 @@ contract DNFactory {
         uint256 mintPrice_,
         uint96 teamAllocation_
     ) external returns (address tokenAddress) {
-        tokenAddress = LibClone.cloneDeterministic(
-            implementation,
-            keccak256(abi.encodePacked(name_))
-        );
-        (bool success, ) = tokenAddress.call(
+        tokenAddress = LibClone.cloneDeterministic(implementation, keccak256(abi.encodePacked(name_)));
+        (bool success,) = tokenAddress.call(
             abi.encodeWithSelector(
-                DN404Cloneable.initialize.selector,
-                name_,
-                symbol_,
-                baseURI_,
-                maxSupply_,
-                mintPrice_,
-                teamAllocation_
+                DN404Cloneable.initialize.selector, name_, symbol_, baseURI_, maxSupply_, mintPrice_, teamAllocation_
             )
         );
 
