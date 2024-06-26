@@ -8,6 +8,8 @@ import {DN404Mirror} from "dn404/DN404Mirror.sol";
 import "forge-std/console.sol";
 
 contract DNFactoryTest is SoladyTest {
+    event NftTransfer(address indexed from, address indexed to, uint256 tokenId);
+
     DNFactory factory;
     address alice = address(111);
     address bob = address(42069);
@@ -78,4 +80,18 @@ contract DNFactoryTest is SoladyTest {
         dn.withdraw();
     }
 
+    function testEmitNftTransfer() public {
+        address dnAddress = factory.deployDN("DN404Clone2", "DNCL2", "https://test.com/", 100e18, 0.000001 ether, 1e18);
+
+        DN404Cloneable dn = DN404Cloneable(payable(dnAddress));
+        // DN404Mirror dnMirror = DN404Mirror(payable(dn.mirrorERC721()));
+
+        vm.expectEmit(true, true, true, true);
+        emit NftTransfer(address(0), bob, 1);
+
+        dn.mint{value: 0.000003 ether}(bob, 3e18);
+        // assertEq(dn.balanceOf(bob), 10e18, "Balance does not match");
+        // assertEq(dnMirror.balanceOf(bob), 10, "Balance does not match");
+        // assertEq(dnMirror.totalSupply(), 10, "Total supply does not match");
+    }
 }

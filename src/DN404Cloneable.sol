@@ -12,6 +12,12 @@ contract DN404Cloneable is DN404, Ownable, Clone {
     error MaxSupplyExceeded();
     error NotEnoughEth();
 
+    event DNTransfer(address indexed from, address indexed to, uint256 tokenId);
+    // event MintLog(address indexed to, uint256 amount);
+    // 0x31f718d8f292caffaa57a35771124aaafd9ae788b83c2859405627d6de9b6c3e
+
+    bytes32 constant _NFT_TRANSFER_EVENT_SIGNATURE = 0x31f718d8f292caffaa57a35771124aaafd9ae788b83c2859405627d6de9b6c3e;
+
     string private _name;
     string private _symbol;
     string private _baseURI;
@@ -68,6 +74,7 @@ contract DN404Cloneable is DN404, Ownable, Clone {
         if (totalSupply() + amount > _maxSupply) revert MaxSupplyExceeded();
         _mint(to, amount);
         refundIfOver(_mintPrice * (amount / 1e18));
+        // emit MintLog(to, amount);
     }
 
     function refundIfOver(uint256 price) private {
@@ -89,4 +96,30 @@ contract DN404Cloneable is DN404, Ownable, Clone {
     function withdraw() public onlyOwner {
         SafeTransferLib.safeTransferAllETH(msg.sender);
     }
+
+    /// @dev Override this function to return true if `_afterNFTTransfers` is used.
+    /// This is to help the compiler avoid producing dead bytecode.
+    function _useAfterNFTTransfers() internal pure override(DN404) returns (bool) {
+        return true;
+    }
+
+    /// @dev Hook that is called after a batch of NFT transfers.
+    /// The lengths of `from`, `to`, and `ids` are guaranteed to be the same.
+    function _afterNFTTransfers(address[] memory from, address[] memory to, uint256[] memory ids)
+        internal
+        override(DN404)
+    {
+        for (uint256 i = 0; i < ids.length; i++) {
+            emit DNTransfer(from[i], to[i], ids[i]);
+        }
+    }
+
+    // function logNftTransfer(address from, address to, uint256 tokenId) public {
+    //     assembly {
+    //         // Emit the {Transfer} event.
+    //         mstore(0x00, tokenId)
+    //         mstore(0x20, from)
+    //         log3(0x00, 0x20, _NFT_TRANSFER_EVENT_SIGNATURE, 0, shr(96, shl(96, to)))
+    //     }
+    // }
 }

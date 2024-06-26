@@ -7,6 +7,16 @@ import {DN404Cloneable} from "./DN404Cloneable.sol";
 contract DNFactory {
     error FailedToInitialize();
 
+    event DNDeployed(
+        address indexed tokenAddress,
+        string name,
+        string symbol,
+        string baseURI,
+        uint256 maxSupply,
+        uint256 mintPrice,
+        uint96 teamAllocation
+    );
+
     address public immutable implementation;
 
     constructor() {
@@ -30,5 +40,7 @@ contract DNFactory {
         );
 
         if (!success) revert FailedToInitialize();
+
+        emit DNDeployed(tokenAddress, name_, symbol_, baseURI_, maxSupply_, mintPrice_, teamAllocation_);
     }
 }
